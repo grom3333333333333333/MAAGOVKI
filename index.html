@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAAG 3998</title>
+    <link rel="icon" href="favicon.ico" type="img/маговки.png">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1E1E1E;
+            --secondary: #E8E8E8;
+            --accent: #B99D6B;
+            --text: #333333;
+            --light: #F9F9F9;
+            --highlight: #D4B483;
+            --error: #C81E1E;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Raleway', sans-serif;
+            line-height: 1.6;
+            background-color: var(--light);
+            color: var(--text);
+            padding: 0;
+            background-image: url('https://www.transparenttextures.com/patterns/concrete-wall.png');
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin: 0 0 30px;
+            position: relative;
+            padding: 30px 0;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .logo-container {
+            margin-bottom: 15px;
+        }
+        
+        .logo {
+            max-height: 50px;
+            max-width: 100%;
+        }
+        
+        .header h1 {
+            color: var(--primary);
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+        
+        .header p {
+            color: var(--text);
+            font-size: 0.95rem;
+            font-weight: 300;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .search-bar {
+            margin: 25px 0;
+            position: relative;
+        }
+        
+        .search-bar input {
+            width: 100%;
+            padding: 14px 50px 14px 20px;
+            border: 1px solid var(--secondary);
+            border-radius: 0;
+            font-size: 1rem;
+            outline: none;
+            background-color: white;
+            transition: all 0.3s ease;
+            font-family: 'Raleway', sans-serif;
+        }
+        
+        .search-bar input:focus {
+            border-color: var(--accent);
+        }
+        
+        .search-bar::after {
+            content: '→';
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent);
+            font-size: 1.2rem;
+        }
+        
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin: 30px 0 20px;
+            color: var(--primary);
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--accent);
+        }
+        
+        .fabric-accordion {
+            margin-bottom: 40px;
+        }
+        
+        .fabric-item {
+            background: white;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+        
+        .fabric-item:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-left-color: var(--accent);
+        }
+        
+        .fabric-header {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .fabric-header::after {
+            content: '+';
+            position: absolute;
+            right: 20px;
+            font-size: 1.5rem;
+            color: var(--accent);
+            transition: transform 0.3s ease;
+        }
+        
+        .fabric-item.active .fabric-header::after {
+            content: '-';
+        }
+        
+        .fabric-image {
+            width: 70px;
+            height: 70px;
+            object-fit: cover;
+            margin-right: 20px;
+            border: 1px solid var(--secondary);
+        }
+        
+        .fabric-title {
+            flex: 1;
+            font-weight: 500;
+            color: var(--primary);
+            font-size: 1.1rem;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .fabric-price {
+            font-weight: 500;
+            color: var(--accent);
+            margin-left: 15px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .fabric-content {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out;
+            background-color: white;
+        }
+        
+        .fabric-item.active .fabric-content {
+            max-height: 1000px;
+            padding: 0 20px 20px;
+        }
+        
+        .property {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--secondary);
+        }
+        
+        .property:last-child {
+            border-bottom: none;
+        }
+        
+        .property-name {
+            font-weight: 400;
+            color: var(--text);
+            font-size: 0.95rem;
+        }
+        
+        .property-value {
+            text-align: right;
+            font-weight: 500;
+        }
+        
+        .rating {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 2px;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .rating-low {
+            background-color: rgba(200, 30, 30, 0.1);
+            color: var(--error);
+        }
+        
+        .rating-medium {
+            background-color: rgba(185, 157, 107, 0.1);
+            color: var(--accent);
+        }
+        
+        .rating-high {
+            background-color: rgba(185, 157, 107, 0.2);
+            color: var(--accent);
+            font-weight: 600;
+        }
+        
+        .rating-very-high {
+            background-color: rgba(185, 157, 107, 0.3);
+            color: var(--accent);
+            font-weight: 700;
+        }
+        
+        .care-symbols {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            justify-content: flex-start;
+        }
+        
+        .care-symbol {
+            width: 32px;
+            height: 32px;
+            background-color: var(--light);
+            border-radius: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 500;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border: 1px solid var(--secondary);
+            cursor: help;
+            position: relative;
+            font-size: 0.9rem;
+        }
+        
+        .care-symbol::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 2px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+            margin-bottom: 8px;
+            font-weight: 300;
+        }
+        
+        .care-symbol:hover::after {
+            opacity: 1;
+        }
+        
+        .care-guide-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 0;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 30px 0;
+            font-weight: 300;
+        }
+        
+        .care-guide-btn:hover {
+            background-color: var(--accent);
+            color: var(--primary);
+        }
+        
+        .care-guide {
+            background: white;
+            padding: 30px;
+            margin: 20px 0;
+            display: none;
+        }
+        
+        .care-guide h3 {
+            color: var(--primary);
+            margin-bottom: 25px;
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+        }
+        
+        .care-guide-item {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--secondary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .care-guide-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .care-guide-symbol {
+            display: inline-flex;
+            width: 32px;
+            height: 32px;
+            background-color: var(--light);
+            border-radius: 2px;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-weight: 500;
+            flex-shrink: 0;
+            border: 1px solid var(--secondary);
+        }
+        
+        .logout-btn {
+            display: block;
+            text-align: center;
+            margin: 50px auto;
+            padding: 15px 30px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 0;
+            font-size: 0.9rem;
+            cursor: pointer;
+            max-width: 250px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 300;
+        }
+        
+        .logout-btn:hover {
+            background-color: var(--accent);
+            color: var(--primary);
+        }
+        
+        .fabric-description {
+            margin-top: 20px;
+            font-size: 0.95rem;
+            color: var(--text);
+            line-height: 1.7;
+            font-weight: 300;
+        }
+        
+        .fabric-description p {
+            margin-bottom: 10px;
+        }
+        
+        .fabric-description a {
+            color: var(--accent);
+            text-decoration: none;
+            border-bottom: 1px dotted var(--accent);
+            transition: all 0.3s;
+        }
+        
+        .fabric-description a:hover {
+            border-bottom-style: solid;
+            color: var(--primary);
+        }
+        
+        .fabric-description strong {
+            font-weight: 500;
+            color: var(--primary);
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .header {
+                padding: 20px 0;
+            }
+            
+            .header h1 {
+                font-size: 1.6rem;
+            }
+            
+            .fabric-header {
+                padding: 15px;
+            }
+            
+            .fabric-image {
+                width: 50px;
+                height: 50px;
+                margin-right: 15px;
+            }
+            
+            .care-guide {
+                padding: 20px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <div class="logo-container">
+                <img src="img/мааглого.png" alt="MAAG" class="logo">
+            </div>
+            
+            <h1>Энциклопедия тканей</h1>
+            <p>Ручной помощник по тканям, который всегда в телефоне (а телефон в шкафчике), на случай, если не знаешь, что ответить на вопрос "А чем хлопок хуже вискозы", то ответ найдётся здесь!</p>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="search-bar">
+            <input type="text" placeholder="Поиск по тканям..." id="searchInput">
+        </div>
+        
+        <h2 class="section-title">Каталог тканей</h2>
+        
+        <button class="care-guide-btn" id="careGuideBtn">Справочник символов по уходу</button>
+        
+        <div class="care-guide" id="careGuide">
+            <h3>Обозначения по уходу за тканями</h3>
+            
+            <div class="care-guide-item">
+                <span class="care-guide-symbol">30</span>
+                <span>Максимальная температура стирки 30°C (деликатный режим)</span>
+            </div>
+            
+            <div class="care-guide-item">
+                <span class="care-guide-symbol">40</span>
+                <span>Максимальная температура стирки 40°C</span>
+            </div>
+            
+            <div class="care-guide-item">
+                <span class="care-guide-symbol">×</span>
+                <span>Не отбеливать</span>
+            </div>
+            
+            <div class="care-guide-item">
+                <span class="care-guide-symbol">◯</span>
+                <span>Можно отбеливать</span>
+            </div>
+            
+            <div class="care-guide-item">
+                <span class="care-guide-symbol">☀</span>
+                <span>Можно сушить на солнце</span>
+            </div>
+            
+            <div class="care-guide-item">
+                <span class="care-guide-symbol">⏀</span>
+                <span>Сушить в тени</span>
+            </div>
+            
+            <div class="care-guide-item">
+                <span class="care-guide-symbol">⎌</span>
+                <span>Можно гладить (точки означают температуру)</span>
+            </div>
+            
+            <div class="care-guide-item">
+                <span class="care-guide-symbol">✕⎌</span>
+                <span>Не гладить</span>
+            </div>
+            
+            <div class="care-guide-item">
+                <span class="care-guide-symbol">P</span>
+                <span>Можно химчистку</span>
+            </div>
+            
+            <div class="care-guide-item">
+                <span class="care-guide-symbol">✕P</span>
+                <span>Нельзя химчистку</span>
+            </div>
+        </div>
+        
+        <div class="fabric-accordion" id="fabricAccordion">
+            <!-- Хлопок -->
+            <div class="fabric-item">
+                <div class="fabric-header">
+                    <img src="img/хлопок.png" class="fabric-image" alt="Хлопок">
+                    <div class="fabric-title">Хлопок</div>
+                    <div class="fabric-price">Средняя цена</div>
+                </div>
+                <div class="fabric-content">
+                    <div class="property">
+                        <span class="property-name">Комфорт на коже</span>
+                        <span class="property-value"><span class="rating rating-high">Высокий</span></span>
+                    </div>
+                    <div class="property">
+                        <span class="property-name">Воздухопроницаемость</span>
+                        <span class="property-value"><span class="rating rating-high">Высокая</span></span>
+                    </div>
+                    <div class="property">
+                        <span class="property-name">Износостойкость</span>
+                        <span class="property-value"><span class="rating rating-medium">Средняя</span></span>
+                    </div>
+                    <div class="property">
+                        <span class="property-name">Уход</span>
+                        <span class="property-value"><span class="rating rating-high">Легкий</span></span>
+                    </div>
+                    <div class="property">
+                        <span class="property-name">Склонность к сминанию</span>
+                        <span class="property-value"><span class="rating rating-medium">Средняя</span></span>
+                    </div>
+                    <div class="property">
+                        <span class="property-name">Экологичность</span>
+                        <span class="property-value"><span class="rating rating-very-high">Высокая</span></span>
+                    </div>
+                    
+                    <div class="care-symbols">
+                        <div class="care-symbol" data-tooltip="Стирка до 40°C">40</div>
+                        <div class="care-symbol" data-tooltip="Можно отбеливать">◯</div>
+                        <div class="care-symbol" data-tooltip="Можно гладить">⎌</div>
+                        <div class="care-symbol" data-tooltip="Можно сушить на солнце">☀</div>
+                    </div>
+                    
+                    <div class="fabric-description">
+                        <p><strong>Хлопок</strong> — натуральная ткань, получаемая из волокон хлопчатника. Одна из самых популярных тканей в мире благодаря своим гигиеническим свойствам и комфорту. <a href="https://ru.wikipedia.org/wiki/Хлопок" target="_blank">Подробнее на Википедии</a>.</p>
+                        <p><strong>Применение:</strong> Одежда (футболки, рубашки, джинсы), постельное бельё, домашний текстиль.</p>
+                        <p><strong>Интересный факт:</strong> Хлопок начали культивировать более 7000 лет назад в древней Индии и Мексике.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Полиэстер -->
+            <div class="fabric-item">
+                <div class="fabric-header">
+                    <img src="img/полиэстр.png" class="fabric-image" alt="Полиэстер">
+                    <div class="fabric-title">Полиэстер</div>
+                    <div class="fabric-price">Бюджетный</div>
+                </div>
+                <div class="fabric-content">
+                    <div class="property">
+                        <span class="property-name">Комфорт на коже</span>
+                        <span class="property-value"><span class="rating rating-low">Низкий</span></span>
+                    </div>
+                    <div class="property">
+                        <span class="property-name">Воздухопроницаемость</span>
+                        <span class="property-value"><span class="rating rating-low">Низкая</span></span>
+                    </div>
+                    <div class="property">
+                        <span class="property-name">Износостойкость</span>
+                        <span class="property-value"><span class="rating rating-high">Высокая</span></span>
+                    </div>
+                    <div class="property">
+                        <span class="property-name">Уход</span>
+                        <span class="property-value"><span class="rating rating-very-high">Очень легкий</span></span>
+                    </div>
+                    <div class="property">
+                        <span class="property-name">Склонность к сминанию</span>
+                        <span class="property-value"><span class="rating rating-high">Низкая</span></span>
+                    </div>
+                    <div class="property">
+                        <span class="property-name">Экологичность</span>
+                        <span class="property-value"><span class="rating rating-low">Низкая</span></span>
+                    </div>
+                    
+                    <div class="care-symbols">
+                        <div class="care-symbol" data-tooltip="Стирка до 30°C">30</div>
+                        <div class="care-symbol" data-tooltip="Не отбеливать">×</div>
+                        <div class="care-symbol" data-tooltip="Можно гладить">⎌</div>
+                        <div class="care-symbol" data-tooltip="Сушить в тени">⏀</div>
+                    </div>
+                    
+                    <div class="fabric-description">
+                        <p><strong>Полиэстер</strong> — синтетическая ткань из полиэфирных волокон. Широко используется в смеси с натуральными волокнами для улучшения свойств ткани. <a href="https://ru.wikipedia.org/wiki/Полиэфирные_волокна" target="_blank">Подробнее на Википедии</a>.</p>
+                        <p><strong>Применение:</strong> Спортивная одежда, куртки, шторы, чехлы, некоторые виды повседневной одежды.</p>
+                        <p><strong>Интересный факт:</strong> Полиэстер был изобретен в 1941 году британскими химиками и первоначально использовался для производства парашютов.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Вискоза -->
+            <div class="fabric-item">
+                <div class="fabric-header">
+                    <img src="img/вискоза.png" class="fabric-image" alt="Вискоза">
+                    <div class="fabric-title">Вискоза</div>
+                    <div class="fabric-price">Выше среднего</div>
+                </div>
+                <div class="fabric-content">
+                    <div class="property">
+                        <span class="property-name">Комфорт на коже</span>
+                        <span class="property-value"><span class="rating rating-high">Высокий</span></span>
+                    </div>
+                    <div class="property">
+                        <span class="property-name">Воздухопроницаемость</span>
+                        <span class="property-value"><span class="rating rating-medium">Средняя</span></span>
+                    </div>
+                    <div class="property">
+                        <span class="property-name">Износостойкость</span>
+                        <span class="property-value"><span class="rating rating-low">Низкая</span></span>
+                    </div>
+                    <div class="property">
+                        <span class="property-name">Уход</span>
+                        <span class="property-value"><span class="rating rating-low">Сложный</span></span>
+                    </div>
+                    <div class="property">
+                        <span class="property-name">Склонность к сминанию</span>
+                        <span class="property-value"><span class="rating rating-high">Высокая</span></span>
+                    </div>
+                    <div class="property">
+                        <span class="property-name">Экологичность</span>
+                        <span class="property-value"><span class="rating rating-medium">Средняя</span></span>
+                    </div>
+                    
+                    <div class="care-symbols">
+                        <div class="care-symbol" data-tooltip="Стирка до 30°C">30</div>
+                        <div class="care-symbol" data-tooltip="Не отбеливать">×</div>
+                        <div class="care-symbol" data-tooltip="Гладить на низкой t">⎌</div>
+                        <div class="care-symbol" data-tooltip="Сушить в тени">⏀</div>
+                        <div class="care-symbol" data-tooltip="Только химчистка">P</div>
+                    </div>
+                    
+                    <div class="fabric-description">
+                        <p><strong>Вискоза</strong> — искусственное волокно, получаемое из натуральной целлюлозы. Сочетает свойства натуральных и синтетических тканей. <a href="https://ru.wikipedia.org/wiki/Вискоза" target="_blank">Подробнее на Википедии</a>.</p>
+                        <p><strong>Применение:</strong> Летняя одежда, платья, блузки, подкладки для костюмов, домашний текстиль.</p>
+                        <p><strong>Интересный факт:</strong> Вискоза была изобретена в 1884 году как более дешевая альтернатива шелку и первоначально называлась "искусственным шелком".</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Лён -->
+            <div class="fabric-item">
+                <div class="fabric-header">
+                    <img src="img/лен.png" class="fabric-image" alt="Лён">
+                    <div class="fabric-title">Лён</div>
+                    <div class="fabric-price">Премиум</div>
+                </div>
+                <div class="fabric-content">
+                    <div class="property">
+                        <span class="property-name">Комфорт на коже</span>
+                        <span class="property-value"><span class="rating rating-high">Высокий</span></span>
+                    </div>
+                    <div class="property">
+                        <span class="property-name">Воздухопроницаемость</span>
+                        <span class="property-value"><span class="rating rating-very-high">Очень высокая</span></span>
+                    </div>
+                    <div class="property">
+                        <span class="property-name">Износостойкость</span>
+                        <span class="property-value"><span class="rating rating-high">Высокая</span></span>
+                    </div>
+                    <div class="property">
+                        <span class="property-name">Уход</span>
+                        <span class="property-value"><span class="rating rating-medium">Средний</span></span>
+                    </div>
+                    <div class="property">
+                        <span class="property-name">Склонность к сминанию</span>
+                        <span class="property-value"><span class="rating rating-very-high">Очень высокая</span></span>
+                    </div>
+                    <div class="property">
+                        <span class="property-name">Экологичность</span>
+                        <span class="property-value"><span class="rating rating-very-high">Очень высокая</span></span>
+                    </div>
+                    
+                    <div class="care-symbols">
+                        <div class="care-symbol" data-tooltip="Стирка до 40°C">40</div>
+                        <div class="care-symbol" data-tooltip="Не отбеливать">×</div>
+                        <div class="care-symbol" data-tooltip="Гладить с паром">⎌</div>
+                        <div class="care-symbol" data-tooltip="Сушить в тени">⏀</div>
+                    </div>
+                    
+                    <div class="fabric-description">
+                        <p><strong>Лён</strong> — одна из древнейших натуральных тканей, получаемая из стеблей льна. Ценится за экологичность и уникальные гигиенические свойства. <a href="https://ru.wikipedia.org/wiki/Льняная_ткань" target="_blank">Подробнее на Википедии</a>.</p>
+                        <p><strong>Применение:</strong> Летняя одежда, костюмы, постельное бельё премиум-класса, скатерти, салфетки.</p>
+                        <p><strong>Интересный факт:</strong> В Древнем Египте льняная ткань считалась символом чистоты и использовалась для изготовления одежды для жрецов и мумий фараонов.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Шёлк -->
+            <div class="fabric-item">
+                <div class="fabric-header">
+                    <img src="img/шелк.png" class="fabric-image" alt="Шёлк">
+                    <div class="fabric-title">Шёлк</div>
+                    <div class="fabric-price">Люкс</div>
+                </div>
+                <div class="fabric-content">
+                    <div class="property">
+                        <span class="property-name">Комфорт на коже</span>
+                        <span class="property-value"><span class="rating rating-very-high">Очень высокий</span></span>
+                    </div>
+                    <div class="property">
+                        <span class="property-name">Воздухопроницаемость</span>
+                        <span class="property-value"><span class="rating rating-high">Высокая</span></span>
+                    </div>
+                    <div class="property">
+                        <span class="property-name">Износостойкость</span>
+                        <span class="property-value"><span class="rating rating-low">Низкая</span></span>
+                    </div>
+                    <div class="property">
+                        <span class="property-name">Уход</span>
+                        <span class="property-value"><span class="rating rating-low">Очень сложный</span></span>
+                    </div>
+                    <div class="property">
+                        <span class="property-name">Склонность к сминанию</span>
+                        <span class="property-value"><span class="rating rating-medium">Средняя</span></span>
+                    </div>
+                    <div class="property">
+                        <span class="property-name">Экологичность</span>
+                        <span class="property-value"><span class="rating rating-high">Высокая</span></span>
+                    </div>
+                    
+                    <div class="care-symbols">
+                        <div class="care-symbol" data-tooltip="Стирка до 30°C">30</div>
+                        <div class="care-symbol" data-tooltip="Не отбеливать">×</div>
+                        <div class="care-symbol" data-tooltip="Не гладить">✕⎌</div>
+                        <div class="care-symbol" data-tooltip="Сушить в тени">⏀</div>
+                        <div class="care-symbol" data-tooltip="Только химчистка">P</div>
+                    </div>
+                    
+                    <div class="fabric-description">
+                        <p><strong>Шёлк</strong> — натуральная ткань животного происхождения, производимая из коконов шелкопряда. Одна из самых роскошных и дорогих тканей в мире. <a href="https://ru.wikipedia.org/wiki/Шёлк" target="_blank">Подробнее на Википедии</a>.</p>
+                        <p><strong>Применение:</strong> Вечерние платья, галстуки, постельное бельё класса люкс, декоративные подушки, шторы.</p>
+                        <p><strong>Интересный факт:</strong> Производство шёлка было государственной тайной Китая более 2500 лет, а за разглашение технологии казнили.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Поплин -->
+            <div class="fabric-item">
+                <div class="fabric-header">
+                    <img src="img/поплин.png" class="fabric-image" alt="Поплин">
+                    <div class="fabric-title">Поплин</div>
+                    <div class="fabric-price">Средний</div>
+                </div>
+                <div class="fabric-content">
+                    <div class="property">
+                        <span class="property-name">Комфорт на коже</span>
+                        <span class="property-value"><span class="rating rating-high">Высокий</span></span>
+                    </div>
+                    <div class="property">
+                        <span class="property-name">Воздухопроницаемость</span>
+                        <span class="property-value"><span class="rating rating-high">Высокая</span></span>
+                    </div>
+                    <div class="property">
+                        <span class="property-name">Износостойкость</span>
+                        <span class="property-value"><span class="rating rating-high">Высокая</span></span>
+                    </div>
+                    <div class="property">
+                        <span class="property-name">Уход</span>
+                        <span class="property-value"><span class="rating rating-high">Легкий</span></span>
+                    </div>
+                    <div class="property">
+                        <span class="property-name">Склонность к сминанию</span>
+                        <span class="property-value"><span class="rating rating-medium">Средняя</span></span>
+                    </div>
+                    <div class="property">
+                        <span class="property-name">Экологичность</span>
+                        <span class="property-value"><span class="rating rating-high">Высокая</span></span>
+                    </div>
+                    
+                    <div class="care-symbols">
+                        <div class="care-symbol" data-tooltip="Стирка до 40°C">40</div>
+                        <div class="care-symbol" data-tooltip="Можно отбеливать">◯</div>
+                        <div class="care-symbol" data-tooltip="Гладить на средней t">⎌</div>
+                        <div class="care-symbol" data-tooltip="Можно сушить на солнце">☀</div>
+                    </div>
+                    
+                    <div class="fabric-description">
+                        <p><strong>Поплин</strong> — плотная хлопковая ткань с мелким рубчиком, образованным использованием более тонких нитей утка. Название происходит от французского "papeline" — папский, так как первоначально производился в Авиньоне для папского двора. <a href="https://ru.wikipedia.org/wiki/Поплин" target="_blank">Подробнее на Википедии</a>.</p>
+                        <p><strong>Применение:</strong> Рубашки, платья, постельное бельё, скатерти. Особенно популярен для пошива классических мужских сорочек.</p>
+                        <p><strong>Интересный факт:</strong> Поплин практически не требует глажки благодаря особой структуре переплетения нитей.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Кашемир -->
+            <div class="fabric-item">
+                <div class="fabric-header">
+                    <img src="img/кашемир.png" class="fabric-image" alt="Кашемир">
+                    <div class="fabric-title">Кашемир</div>
+                    <div class="fabric-price">Люкс</div>
+                </div>
+                <div class="fabric-content">
+                    <div class="property">
+                        <span class="property-name">Комфорт на коже</span>
+                        <span class="property-value"><span class="rating rating-very-high">Очень высокий</span></span>
+                    </div>
+                    <div class="property">
+                        <span class="property-name">Воздухопроницаемость</span>
+                        <span class="property-value"><span class="rating rating-high">Высокая</span></span>
+                    </div>
+                    <div class="property">
+                        <span class="property-name">Износостойкость</span>
+                        <span class="rating rating-medium">Средняя</span></span>
+                    </div>
+                    <div class="property">
+                        <span class="property-name">Уход</span>
+                        <span class="property-value"><span class="rating rating-medium">Средний</span></span>
+                    </div>
+                    <div class="property">
+                        <span class="property-name">Склонность к сминанию</span>
+                        <span class="property-value"><span class="rating rating-low">Низкая</span></span>
+                    </div>
+                    <div class="property">
+                        <span class="property-name">Экологичность</span>
+                        <span class="property-value"><span class="rating rating-high">Высокая</span></span>
+                    </div>
+                    
+                    <div class="care-symbols">
+                        <div class="care-symbol" data-tooltip="Стирка до 30°C">30</div>
+                        <div class="care-symbol" data-tooltip="Не отбеливать">×</div>
+                        <div class="care-symbol" data-tooltip="Гладить на низкой t">⎌</div>
+                        <div class="care-symbol" data-tooltip="Сушить в тени">⏀</div>
+                        <div class="care-symbol" data-tooltip="Только химчистка">P</div>
+                    </div>
+                    
+                    <div class="fabric-description">
+                        <p><strong>Кашемир</strong> — одна из самых роскошных натуральных тканей, получаемая из подшерстка горных коз. Ценится за невероятную мягкость и тепло. <a href="https://ru.wikipedia.org/wiki/Кашемир_(ткань)" target="_blank">Подробнее на Википедии</a>.</p>
+                        <p><strong>Применение:</strong> Дорогие свитера, шарфы, пальто, платки и другие предметы роскошного гардероба.</p>
+                        <p><strong>Интересный факт:</strong> Для производства одного кашемирового свитера требуется подшерсток с 4-6 коз, которых вычесывают вручную раз в год.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Бамбук -->
+            <div class="fabric-item">
+                <div class="fabric-header">
+                    <img src="img/бамбук.png" class="fabric-image" alt="Бамбук">
+                    <div class="fabric-title">Бамбук</div>
+                    <div class="fabric-price">Выше среднего</div>
+                </div>
+                <div class="fabric-content">
+                    <div class="property">
+                        <span class="property-name">Комфорт на коже</span>
+                        <span class="property-value"><span class="rating rating-high">Высокий</span></span>
+                    </div>
+                    <div class="property">
+                        <span class="property-name">Воздухопроницаемость</span>
+                        <span class="property-value"><span class="rating rating-high">Высокая</span></span>
+                    </div>
+                    <div class="property">
+                        <span class="property-name">Износостойкость</span>
+                        <span class="property-value"><span class="rating rating-medium">Средняя</span></span>
+                    </div>
+                    <div class="property">
+                        <span class="property-name">Уход</span>
+                        <span class="property-value"><span class="rating rating-high">Легкий</span></span>
+                    </div>
+                    <div class="property">
+                        <span class="property-name">Склонность к сминанию</span>
+                        <span class="property-value"><span class="rating rating-medium">Средняя</span></span>
+                    </div>
+                    <div class="property">
+                        <span class="property-name">Экологичность</span>
+                        <span class="property-value"><span class="rating rating-very-high">Очень высокая</span></span>
+                    </div>
+                    
+                    <div class="care-symbols">
+                        <div class="care-symbol" data-tooltip="Стирка до 30°C">30</div>
+                        <div class="care-symbol" data-tooltip="Не отбеливать">×</div>
+                        <div class="care-symbol" data-tooltip="Гладить на низкой t">⎌</div>
+                        <div class="care-symbol" data-tooltip="Сушить в тени">⏀</div>
+                    </div>
+                    
+                    <div class="fabric-description">
+                        <p><strong>Бамбуковое волокно</strong> — экологичная ткань, производимая из целлюлозы бамбука. Обладает антибактериальными свойствами и мягкостью. <a href="https://ru.wikipedia.org/wiki/Бамбуковое_волокно" target="_blank">Подробнее на Википедии</a>.</p>
+                        <p><strong>Применение:</strong> Постельное бельё, носки, нижнее бельё, полотенца, детская одежда.</p>
+                        <p><strong>Интересный факт:</strong> Бамбук растёт со скоростью до 1 метра в день и не требует пестицидов для выращивания.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Тенсел -->
+            <div class="fabric-item">
+                <div class="fabric-header">
+                    <img src="img/тенсел.png" class="fabric-image" alt="Тенсел">
+                    <div class="fabric-title">Тенсел</div>
+                    <div class="fabric-price">Премиум</div>
+                </div>
+                <div class="fabric-content">
+                    <div class="property">
+                        <span class="property-name">Комфорт на коже</span>
+                        <span class="property-value"><span class="rating rating-very-high">Очень высокий</span></span>
+                    </div>
+                    <div class="property">
+                        <span class="property-name">Воздухопроницаемость</span>
+                        <span class="property-value"><span class="rating rating-high">Высокая</span></span>
+                    </div>
+                    <div class="property">
+                        <span class="property-name">Износостойкость</span>
+                        <span class="property-value"><span class="rating rating-medium">Средняя</span></span>
+                    </div>
+                    <div class="property">
+                        <span class="property-name">Уход</span>
+                        <span class="property-value"><span class="rating rating-medium">Средний</span></span>
+                    </div>
+                    <div class="property">
+                        <span class="property-name">Склонность к сминанию</span>
+                        <span class="property-value"><span class="rating rating-high">Высокая</span></span>
+                    </div>
+                    <div class="property">
+                        <span class="property-name">Экологичность</span>
+                        <span class="property-value"><span class="rating rating-very-high">Очень высокая</span></span>
+                    </div>
+                    
+                    <div class="care-symbols">
+                        <div class="care-symbol" data-tooltip="Стирка до 30°C">30</div>
+                        <div class="care-symbol" data-tooltip="Не отбеливать">×</div>
+                        <div class="care-symbol" data-tooltip="Гладить на низкой t">⎌</div>
+                        <div class="care-symbol" data-tooltip="Сушить в тени">⏀</div>
+                    </div>
+                    
+                    <div class="fabric-description">
+                        <p><strong>Тенсел (Lyocell)</strong> — современное экологичное волокно из древесной целлюлозы эвкалипта. Производится по замкнутой технологии с минимальным воздействием на окружающую среду. <a href="https://ru.wikipedia.org/wiki/Лиоцелл" target="_blank">Подробнее на Википедии</a>.</p>
+                        <p><strong>Применение:</strong> Постельное бельё премиум-класса, повседневная одежда, домашний текстиль.</p>
+                        <p><strong>Интересный факт:</strong> Тенсел обладает уникальной способностью впитывать влагу лучше хлопка, оставаясь при этом сухим на ощупь.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <button class="logout-btn">By. kulek</button>
+    </div>
+
+    <script>
+        // Активация аккордеона
+        document.querySelectorAll('.fabric-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const item = header.parentElement;
+                const isActive = item.classList.contains('active');
+                
+                // Закрываем все открытые элементы
+                document.querySelectorAll('.fabric-item').forEach(el => {
+                    el.classList.remove('active');
+                });
+                
+                // Открываем текущий, если он не был открыт
+                if (!isActive) {
+                    item.classList.add('active');
+                    item.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'nearest'
+                    });
+                }
+            });
+        });
+        
+        // Поиск тканей
+        document.getElementById('searchInput').addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            const items = document.querySelectorAll('.fabric-item');
+            
+            items.forEach(item => {
+                const title = item.querySelector('.fabric-title').textContent.toLowerCase();
+                if (title.includes(searchTerm)) {
+                    item.style.display = '';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+        
+        // Открытие/закрытие справочника символов
+        const careGuideBtn = document.getElementById('careGuideBtn');
+        const careGuide = document.getElementById('careGuide');
+        
+        careGuideBtn.addEventListener('click', () => {
+            if (careGuide.style.display === 'block') {
+                careGuide.style.display = 'none';
+                careGuideBtn.textContent = 'Справочник символов по уходу';
+            } else {
+                careGuide.style.display = 'block';
+                careGuideBtn.textContent = 'Скрыть справочник';
+                careGuide.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    </script>
+</body>
+</html>

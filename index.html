@@ -3,18 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MAAG 3998</title>
-    <link rel="icon" href="favicon.ico" type="img/маговки.png">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
+    <title>MAAG | Энциклопедия тканей</title>
+    <link rel="icon" href="favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         :root {
-            --primary: #1E1E1E;
-            --secondary: #E8E8E8;
-            --accent: #B99D6B;
-            --text: #333333;
-            --light: #F9F9F9;
-            --highlight: #D4B483;
-            --error: #C81E1E;
+            --primary: #1a1a1a;
+            --secondary: #f8f8f8;
+            --accent: #d4af73;
+            --text: #333;
+            --light: #ffffff;
+            --highlight: #e8d9b5;
+            --error: #c23b22;
+            --success: #28a745;
+            --dark-gray: #6c757d;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+            --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
         }
         
         * {
@@ -25,185 +32,369 @@
         
         body {
             font-family: 'Raleway', sans-serif;
-            line-height: 1.6;
+            line-height: 1.7;
             background-color: var(--light);
             color: var(--text);
             padding: 0;
-            background-image: url('https://www.transparenttextures.com/patterns/concrete-wall.png');
+            -webkit-font-smoothing: antialiased;
         }
         
         .container {
-            max-width: 800px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 0 40px;
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            gap: 40px;
         }
         
+        .main-content {
+            padding: 60px 0;
+        }
+        
+        /* Шапка */
         .header {
-            text-align: center;
-            margin: 0 0 30px;
+            background: var(--primary);
+            color: white;
+            padding: 40px 0;
+            margin-bottom: 0;
             position: relative;
-            padding: 30px 0;
-            background-color: white;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            overflow: hidden;
         }
         
-        .logo-container {
-            margin-bottom: 15px;
+        .header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                linear-gradient(135deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0) 100%),
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100" fill="none" stroke="%23d4af7355" stroke-width="0.5"><rect x="0.5" y="0.5" width="99" height="99"/></svg>');
+            opacity: 0.6;
+            z-index: 0;
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            z-index: 1;
         }
         
         .logo {
-            max-height: 50px;
-            max-width: 100%;
+            height: 80px;
+            margin-bottom: 25px;
+            filter: brightness(0) invert(1);
+            transition: var(--transition);
+        }
+        
+        .logo:hover {
+            transform: scale(1.05);
         }
         
         .header h1 {
-            color: var(--primary);
             font-family: 'Playfair Display', serif;
-            font-size: 2rem;
-            margin-bottom: 10px;
-            font-weight: 600;
-            letter-spacing: 1px;
+            font-size: 3rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            line-height: 1.2;
         }
         
         .header p {
-            color: var(--text);
-            font-size: 0.95rem;
+            font-size: 1.2rem;
+            max-width: 700px;
+            opacity: 0.9;
             font-weight: 300;
-            max-width: 500px;
-            margin: 0 auto;
+            margin-bottom: 30px;
+        }
+        
+        .header-cta {
+            display: inline-flex;
+            align-items: center;
+            background: var(--accent);
+            color: var(--primary);
+            padding: 12px 28px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .header-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+            background: var(--highlight);
+        }
+        
+        .header-cta i {
+            margin-left: 8px;
+            font-size: 0.9em;
+        }
+        
+        /* Поиск */
+        .search-container {
+            margin: 40px 0;
+            position: relative;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
         }
         
         .search-bar {
-            margin: 25px 0;
-            position: relative;
-        }
-        
-        .search-bar input {
             width: 100%;
-            padding: 14px 50px 14px 20px;
-            border: 1px solid var(--secondary);
-            border-radius: 0;
-            font-size: 1rem;
-            outline: none;
-            background-color: white;
-            transition: all 0.3s ease;
+            padding: 18px 30px;
+            border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 50px;
+            font-size: 1.1rem;
+            background: white;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
             font-family: 'Raleway', sans-serif;
+            padding-right: 60px;
         }
         
-        .search-bar input:focus {
+        .search-bar:focus {
+            outline: none;
             border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(212, 175, 115, 0.2);
         }
         
-        .search-bar::after {
-            content: '→';
+        .search-icon {
             position: absolute;
-            right: 20px;
+            right: 25px;
             top: 50%;
             transform: translateY(-50%);
             color: var(--accent);
-            font-size: 1.2rem;
+            font-size: 1.3rem;
+            pointer-events: none;
         }
         
-        .section-title {
+        /* Боковая панель */
+        .sidebar {
+            padding: 60px 0;
+            position: sticky;
+            top: 20px;
+            align-self: start;
+        }
+        
+        .sidebar-section {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid rgba(0,0,0,0.05);
+            transition: var(--transition);
+        }
+        
+        .sidebar-section:hover {
+            box-shadow: var(--shadow-md);
+        }
+        
+        .sidebar h3 {
             font-family: 'Playfair Display', serif;
             font-size: 1.5rem;
-            margin: 30px 0 20px;
+            margin-bottom: 25px;
             color: var(--primary);
             position: relative;
-            padding-bottom: 10px;
+            padding-bottom: 15px;
+            font-weight: 600;
         }
         
-        .section-title::after {
+        .sidebar h3::after {
             content: '';
             position: absolute;
             bottom: 0;
             left: 0;
             width: 50px;
-            height: 2px;
+            height: 3px;
             background-color: var(--accent);
+            border-radius: 3px;
         }
         
+        .update-log {
+            margin-top: 15px;
+        }
+        
+        .update {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .update:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .version {
+            font-weight: 700;
+            color: var(--accent);
+            margin-right: 10px;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .date {
+            font-size: 0.9rem;
+            color: var(--dark-gray);
+            display: block;
+            margin-top: 3px;
+        }
+        
+        .update p {
+            margin-top: 10px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        
+        .contributor {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: var(--secondary);
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+        
+        .contributor:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .contributor .name {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+        }
+        
+        .contributor .store {
+            font-size: 0.9rem;
+            color: var(--dark-gray);
+            line-height: 1.5;
+        }
+        
+        /* Карточки тканей */
         .fabric-accordion {
-            margin-bottom: 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
         }
         
         .fabric-item {
             background: white;
-            margin-bottom: 15px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            transition: all 0.3s ease;
-            border-left: 3px solid transparent;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            border: 1px solid rgba(0,0,0,0.05);
+            position: relative;
+        }
+        
+        .fabric-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--accent);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: var(--transition);
         }
         
         .fabric-item:hover {
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            border-left-color: var(--accent);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .fabric-item:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .fabric-item.active {
+            box-shadow: 0 5px 25px rgba(0,0,0,0.15);
         }
         
         .fabric-header {
             display: flex;
             align-items: center;
-            padding: 20px;
+            padding: 25px;
             cursor: pointer;
-            position: relative;
+            background: white;
+            color: var(--primary);
+            transition: var(--transition);
         }
         
-        .fabric-header::after {
-            content: '+';
-            position: absolute;
-            right: 20px;
-            font-size: 1.5rem;
-            color: var(--accent);
-            transition: transform 0.3s ease;
-        }
-        
-        .fabric-item.active .fabric-header::after {
-            content: '-';
+        .fabric-item.active .fabric-header {
+            background: var(--secondary);
         }
         
         .fabric-image {
             width: 70px;
             height: 70px;
             object-fit: cover;
+            border-radius: 8px;
             margin-right: 20px;
-            border: 1px solid var(--secondary);
+            border: 1px solid rgba(0,0,0,0.05);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+        
+        .fabric-item:hover .fabric-image {
+            transform: rotate(5deg);
         }
         
         .fabric-title {
             flex: 1;
-            font-weight: 500;
-            color: var(--primary);
-            font-size: 1.1rem;
+            font-weight: 700;
+            font-size: 1.2rem;
             font-family: 'Playfair Display', serif;
+            letter-spacing: 0.3px;
         }
         
         .fabric-price {
-            font-weight: 500;
+            font-weight: 600;
             color: var(--accent);
             margin-left: 15px;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            font-size: 0.95rem;
+            padding: 6px 12px;
+            background: rgba(212, 175, 115, 0.1);
+            border-radius: 20px;
+            min-width: 100px;
+            text-align: center;
         }
         
         .fabric-content {
-            padding: 0 20px;
+            padding: 0 25px;
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.4s ease-out;
-            background-color: white;
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            background: white;
         }
         
         .fabric-item.active .fabric-content {
-            max-height: 1000px;
-            padding: 0 20px 20px;
+            max-height: 2000px;
+            padding: 0 25px 30px;
         }
         
         .property {
             display: flex;
             justify-content: space-between;
-            padding: 12px 0;
-            border-bottom: 1px solid var(--secondary);
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            align-items: center;
         }
         
         .property:last-child {
@@ -211,43 +402,47 @@
         }
         
         .property-name {
-            font-weight: 400;
-            color: var(--text);
-            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--primary);
         }
         
         .property-value {
             text-align: right;
-            font-weight: 500;
+            font-weight: 600;
         }
         
         .rating {
-            display: inline-block;
-            padding: 3px 8px;
-            border-radius: 2px;
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 12px;
+            border-radius: 20px;
             font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+        
+        .rating i {
+            margin-right: 5px;
+            font-size: 0.8em;
         }
         
         .rating-low {
-            background-color: rgba(200, 30, 30, 0.1);
+            background-color: rgba(194, 59, 34, 0.1);
             color: var(--error);
         }
         
         .rating-medium {
-            background-color: rgba(185, 157, 107, 0.1);
+            background-color: rgba(212, 175, 115, 0.15);
             color: var(--accent);
         }
         
         .rating-high {
-            background-color: rgba(185, 157, 107, 0.2);
+            background-color: rgba(212, 175, 115, 0.25);
             color: var(--accent);
-            font-weight: 600;
+            font-weight: 700;
         }
         
         .rating-very-high {
-            background-color: rgba(185, 157, 107, 0.3);
+            background-color: rgba(212, 175, 115, 0.35);
             color: var(--accent);
             font-weight: 700;
         }
@@ -256,24 +451,32 @@
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
-            margin: 20px 0;
-            justify-content: flex-start;
+            margin: 25px 0;
         }
         
         .care-symbol {
-            width: 32px;
-            height: 32px;
-            background-color: var(--light);
-            border-radius: 2px;
+            width: 40px;
+            height: 40px;
+            background-color: var(--secondary);
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 500;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            border: 1px solid var(--secondary);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid rgba(0,0,0,0.05);
             cursor: help;
             position: relative;
-            font-size: 0.9rem;
+            transition: var(--transition);
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+        }
+        
+        .care-symbol:hover {
+            transform: scale(1.1) rotate(10deg);
+            box-shadow: var(--shadow-md);
+            background: var(--accent);
+            color: white;
         }
         
         .care-symbol::after {
@@ -284,126 +487,53 @@
             transform: translateX(-50%);
             background: var(--primary);
             color: white;
-            padding: 5px 10px;
-            border-radius: 2px;
-            font-size: 0.8rem;
+            padding: 8px 15px;
+            border-radius: 6px;
+            font-size: 0.85rem;
             white-space: nowrap;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.3s;
-            margin-bottom: 8px;
-            font-weight: 300;
+            transition: var(--transition);
+            margin-bottom: 10px;
+            font-family: 'Raleway', sans-serif;
+            font-weight: 400;
         }
         
-        .care-symbol:hover::after {
+        .care-symbol::before {
+            content: '';
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 6px solid transparent;
+            border-top-color: var(--primary);
+            opacity: 0;
+            transition: var(--transition);
+            margin-bottom: -2px;
+        }
+        
+        .care-symbol:hover::after,
+        .care-symbol:hover::before {
             opacity: 1;
         }
         
-        .care-guide-btn {
-            display: block;
-            width: 100%;
-            padding: 15px;
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 0;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin: 30px 0;
-            font-weight: 300;
-        }
-        
-        .care-guide-btn:hover {
-            background-color: var(--accent);
-            color: var(--primary);
-        }
-        
-        .care-guide {
-            background: white;
-            padding: 30px;
-            margin: 20px 0;
-            display: none;
-        }
-        
-        .care-guide h3 {
-            color: var(--primary);
-            margin-bottom: 25px;
-            text-align: center;
-            font-family: 'Playfair Display', serif;
-            font-size: 1.3rem;
-        }
-        
-        .care-guide-item {
-            margin-bottom: 20px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid var(--secondary);
-            display: flex;
-            align-items: center;
-        }
-        
-        .care-guide-item:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
-        }
-        
-        .care-guide-symbol {
-            display: inline-flex;
-            width: 32px;
-            height: 32px;
-            background-color: var(--light);
-            border-radius: 2px;
-            align-items: center;
-            justify-content: center;
-            margin-right: 15px;
-            font-weight: 500;
-            flex-shrink: 0;
-            border: 1px solid var(--secondary);
-        }
-        
-        .logout-btn {
-            display: block;
-            text-align: center;
-            margin: 50px auto;
-            padding: 15px 30px;
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 0;
-            font-size: 0.9rem;
-            cursor: pointer;
-            max-width: 250px;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: 300;
-        }
-        
-        .logout-btn:hover {
-            background-color: var(--accent);
-            color: var(--primary);
-        }
-        
         .fabric-description {
-            margin-top: 20px;
-            font-size: 0.95rem;
+            margin-top: 25px;
+            font-size: 1rem;
+            line-height: 1.8;
             color: var(--text);
-            line-height: 1.7;
-            font-weight: 300;
         }
         
         .fabric-description p {
-            margin-bottom: 10px;
+            margin-bottom: 15px;
         }
         
         .fabric-description a {
             color: var(--accent);
             text-decoration: none;
             border-bottom: 1px dotted var(--accent);
-            transition: all 0.3s;
+            transition: var(--transition);
+            font-weight: 500;
         }
         
         .fabric-description a:hover {
@@ -412,114 +542,242 @@
         }
         
         .fabric-description strong {
-            font-weight: 500;
+            font-weight: 700;
             color: var(--primary);
+        }
+        
+        /* Форма обратной связи */
+        .feedback-section {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            margin: 60px 0;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid rgba(0,0,0,0.05);
+            text-align: center;
+        }
+        
+        .feedback-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: var(--primary);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .feedback-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background-color: var(--accent);
+            border-radius: 3px;
+        }
+        
+        .feedback-iframe {
+            border: none;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            height: 600px;
+        }
+        
+        /* Футер */
+        .footer {
+            background: var(--primary);
+            color: white;
+            padding: 50px 0 30px;
+            text-align: center;
+            margin-top: 80px;
+            position: relative;
+        }
+        
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--accent);
+        }
+        
+        .footer-logo {
+            height: 50px;
+            margin-bottom: 25px;
+            filter: brightness(0) invert(1);
+            opacity: 0.8;
+            transition: var(--transition);
+        }
+        
+        .footer-logo:hover {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+        
+        .footer p {
+            opacity: 0.7;
+            font-size: 0.95rem;
+            margin-bottom: 10px;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .footer-link {
+            color: white;
+            opacity: 0.7;
+            text-decoration: none;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+        
+        .footer-link:hover {
+            opacity: 1;
+            color: var(--accent);
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: var(--transition);
+            font-size: 1.1rem;
+        }
+        
+        .social-link:hover {
+            background: var(--accent);
+            color: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        /* Анимации */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 1200px) {
+            .container {
+                padding: 0 30px;
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .sidebar {
+                order: -1;
+                padding-top: 0;
+                position: static;
+            }
+            
+            .fabric-accordion {
+                grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            }
         }
         
         @media (max-width: 768px) {
             .container {
-                padding: 15px;
-            }
-            
-            .header {
-                padding: 20px 0;
+                padding: 0 20px;
             }
             
             .header h1 {
-                font-size: 1.6rem;
+                font-size: 2.2rem;
+            }
+            
+            .header p {
+                font-size: 1.1rem;
+            }
+            
+            .fabric-accordion {
+                grid-template-columns: 1fr;
             }
             
             .fabric-header {
-                padding: 15px;
+                padding: 20px;
+            }
+            
+            .feedback-section {
+                padding: 30px 20px;
+            }
+            
+            .header-content,
+            .feedback-section {
+                padding: 0 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .header p {
+                font-size: 1rem;
+            }
+            
+            .search-bar {
+                padding: 15px 25px;
+                font-size: 1rem;
             }
             
             .fabric-image {
-                width: 50px;
-                height: 50px;
+                width: 60px;
+                height: 60px;
                 margin-right: 15px;
             }
             
-            .care-guide {
-                padding: 20px 15px;
+            .fabric-title {
+                font-size: 1.1rem;
+            }
+            
+            .fabric-price {
+                font-size: 0.85rem;
+                min-width: auto;
             }
         }
+
     </style>
 </head>
 <body>
-    <div class="header">
-        <div class="container">
-            <div class="logo-container">
-                <img src="img/мааглого.png" alt="MAAG" class="logo">
-            </div>
-            
+    <header class="header">
+        <div class="header-content">
+            <img src="img/мааглого.png" alt="MAAG" class="logo">
             <h1>Энциклопедия тканей</h1>
-            <p>Ручной помощник по тканям, который всегда в телефоне (а телефон в шкафчике), на случай, если не знаешь, что ответить на вопрос "А чем хлопок хуже вискозы", то ответ найдётся здесь!</p>
+            <p>Ручной помощник по тканям, который всегда в телефоне, на случай, если не знаешь, что ответить на вопрос "А чем хлопок хуже вискозы", то ответ найдётся здесь!</p>
         </div>
-    </div>
+    </header>
     
     <div class="container">
-        <div class="search-bar">
-            <input type="text" placeholder="Поиск по тканям..." id="searchInput">
-        </div>
-        
-        <h2 class="section-title">Каталог тканей</h2>
-        
-        <button class="care-guide-btn" id="careGuideBtn">Справочник символов по уходу</button>
-        
-        <div class="care-guide" id="careGuide">
-            <h3>Обозначения по уходу за тканями</h3>
-            
-            <div class="care-guide-item">
-                <span class="care-guide-symbol">30</span>
-                <span>Максимальная температура стирки 30°C (деликатный режим)</span>
+        <main class="main-content">
+            <div class="search-container">
+                <input type="text" class="search-bar" placeholder="Поиск по тканям..." id="searchInput">
+                <span class="search-icon">→</span>
             </div>
-            
-            <div class="care-guide-item">
-                <span class="care-guide-symbol">40</span>
-                <span>Максимальная температура стирки 40°C</span>
-            </div>
-            
-            <div class="care-guide-item">
-                <span class="care-guide-symbol">×</span>
-                <span>Не отбеливать</span>
-            </div>
-            
-            <div class="care-guide-item">
-                <span class="care-guide-symbol">◯</span>
-                <span>Можно отбеливать</span>
-            </div>
-            
-            <div class="care-guide-item">
-                <span class="care-guide-symbol">☀</span>
-                <span>Можно сушить на солнце</span>
-            </div>
-            
-            <div class="care-guide-item">
-                <span class="care-guide-symbol">⏀</span>
-                <span>Сушить в тени</span>
-            </div>
-            
-            <div class="care-guide-item">
-                <span class="care-guide-symbol">⎌</span>
-                <span>Можно гладить (точки означают температуру)</span>
-            </div>
-            
-            <div class="care-guide-item">
-                <span class="care-guide-symbol">✕⎌</span>
-                <span>Не гладить</span>
-            </div>
-            
-            <div class="care-guide-item">
-                <span class="care-guide-symbol">P</span>
-                <span>Можно химчистку</span>
-            </div>
-            
-            <div class="care-guide-item">
-                <span class="care-guide-symbol">✕P</span>
-                <span>Нельзя химчистку</span>
-            </div>
-        </div>
-        
         <div class="fabric-accordion" id="fabricAccordion">
             <!-- Хлопок -->
             <div class="fabric-item">
@@ -955,10 +1213,171 @@
                     </div>
                 </div>
             </div>
+            <div class="fabric-item">
+    <div class="fabric-header">
+        <img src="img/шерсть.png" class="fabric-image" alt="Шерсть">
+        <div class="fabric-title">Шерсть</div>
+        <div class="fabric-price">Премиум</div>
+    </div>
+    <div class="fabric-content">
+        <div class="property">
+            <span class="property-name">Теплоизоляция</span>
+            <span class="property-value"><span class="rating rating-very-high">Очень высокая</span></span>
+        </div>
+        <div class="property">
+            <span class="property-name">Гигроскопичность</span>
+            <span class="property-value"><span class="rating rating-high">Высокая</span></span>
+        </div>
+        <div class="property">
+            <span class="property-name">Износостойкость</span>
+            <span class="property-value"><span class="rating rating-medium">Средняя</span></span>
+        </div>
+        <div class="property">
+            <span class="property-name">Уход</span>
+            <span class="property-value"><span class="rating rating-low">Сложный</span></span>
+        </div>
+        <div class="property">
+            <span class="property-name">Склонность к катышкам</span>
+            <span class="property-value"><span class="rating rating-high">Высокая</span></span>
         </div>
         
-        <button class="logout-btn">By. kulek</button>
+        <div class="care-symbols">
+            <div class="care-symbol" data-tooltip="Ручная стирка до 30°C">30</div>
+            <div class="care-symbol" data-tooltip="Не отбеливать">×</div>
+            <div class="care-symbol" data-tooltip="Гладить через ткань">⎌</div>
+            <div class="care-symbol" data-tooltip="Сушить горизонтально">⏀</div>
+            <div class="care-symbol" data-tooltip="Только химчистка">P</div>
+        </div>
+        
+        <div class="fabric-description">
+            <p><strong>Шерсть</strong> — натуральное волокно животного происхождения (чаще всего овечье). <a href="https://ru.wikipedia.org/wiki/Шерсть" target="_blank">Подробнее на Википедии</a>.</p>
+            <p><strong>Виды:</strong> мериносовая, кашемир (козья), ангора (кроличья), альпака</p>
+            <p><strong>Применение:</strong> пальто, костюмы, свитера, пледы, зимние аксессуары</p>
+            <p><strong>Интересный факт:</strong> Шерсть мериноса в 5 раз тоньше человеческого волоса и может впитывать до 30% влаги от своего веса, оставаясь сухой на ощупь.</p>
+        </div>
     </div>
+</div>
+<div class="fabric-item">
+    <div class="fabric-header">
+        <img src="img/люрекс.png" class="fabric-image" alt="Люрекс">
+        <div class="fabric-title">Люрекс</div>
+        <div class="fabric-price">Средний</div>
+    </div>
+    <div class="fabric-content">
+        <div class="property">
+            <span class="property-name">Эффектность</span>
+            <span class="property-value"><span class="rating rating-very-high">Очень высокая</span></span>
+        </div>
+        <div class="property">
+            <span class="property-name">Прочность</span>
+            <span class="property-value"><span class="rating rating-medium">Средняя</span></span>
+        </div>
+        <div class="property">
+            <span class="property-name">Комфорт</span>
+            <span class="property-value"><span class="rating rating-low">Низкий</span></span>
+        </div>
+        <div class="property">
+            <span class="property-name">Уход</span>
+            <span class="property-value"><span class="rating rating-medium">Средний</span></span>
+        </div>
+        
+        <div class="care-symbols">
+            <div class="care-symbol" data-tooltip="Стирка до 30°C">30</div>
+            <div class="care-symbol" data-tooltip="Не отбеливать">×</div>
+            <div class="care-symbol" data-tooltip="Не гладить">✕⎌</div>
+            <div class="care-symbol" data-tooltip="Сушить в тени">⏀</div>
+        </div>
+        
+        <div class="fabric-description">
+            <p><strong>Люрекс</strong> — металлизированная нить или ткань с блестящим эффектом. <a href="https://ru.wikipedia.org/wiki/Люрекс" target="_blank">Подробнее на Википедии</a>.</p>
+            <p><strong>Состав:</strong> Полиэстер/нейлон с напылением металла или металлизированной плёнкой</p>
+            <p><strong>Применение:</strong> Вечерние наряды, сценические костюмы, декоративные элементы</p>
+            <p><strong>Интересный факт:</strong> Современный люрекс изготавливают из алюминиевой фольги, покрытой пластиком, что делает его гибким и безопасным для кожи.</p>
+        </div>
+    </div>
+</div>
+<div class="fabric-item">
+    <div class="fabric-header">
+        <img src="img/модал.png" class="fabric-image" alt="Модал">
+        <div class="fabric-title">Модал</div>
+        <div class="fabric-price">Выше среднего</div>
+    </div>
+    <div class="fabric-content">
+        <div class="property">
+            <span class="property-name">Мягкость</span>
+            <span class="property-value"><span class="rating rating-very-high">Очень высокая</span></span>
+        </div>
+        <div class="property">
+            <span class="property-name">Гигроскопичность</span>
+            <span class="property-value"><span class="rating rating-high">Высокая</span></span>
+        </div>
+        <div class="property">
+            <span class="property-name">Износостойкость</span>
+            <span class="property-value"><span class="rating rating-high">Высокая</span></span>
+        </div>
+        <div class="property">
+            <span class="property-name">Экологичность</span>
+            <span class="property-value"><span class="rating rating-high">Высокая</span></span>
+        </div>
+        
+        <div class="care-symbols">
+            <div class="care-symbol" data-tooltip="Стирка до 40°C">40</div>
+            <div class="care-symbol" data-tooltip="Не отбеливать">×</div>
+            <div class="care-symbol" data-tooltip="Гладить на низкой t">⎌</div>
+            <div class="care-symbol" data-tooltip="Сушить в тени">⏀</div>
+        </div>
+        
+        <div class="fabric-description">
+            <p><strong>Модал</strong> — улучшенная вискоза из буковой целлюлозы. <a href="htt1ps://ru.wikipedia.org/wiki/Modal_(ткань)" target="_blank">Подробнее на Википедии</a>.</p>
+            <p><strong>Преимущества:</strong> Не скатывается, не садится, в 2 раза прочнее хлопка</p>
+            <p><strong>Применение:</strong> Постельное бельё, нижнее бельё, футболки, домашняя одежда</p>
+            <p><strong>Интересный факт:</strong> Модал производится по замкнутой технологии, где 99% химикатов повторно используются.</p>
+        </div>
+    </div>
+</div>
+            </div>
+            
+            <div class="feedback-section">
+                <h2>Предложите новую ткань</h2>
+                <iframe class="feedback-iframe" src="https://docs.google.com/forms/d/e/1FAIpQLSf8MIvL6QoXI0cVEZgGxDh_pPd6YqypkOvFVHjt59Ldzd4Rxw/viewform?embedded=true" width="100%" height="600" frameborder="0" marginheight="0" marginwidth="0">Загрузка...</iframe>
+            </div>
+        </main>
+        
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <h3>Благодарности</h3>
+                <div class="contributor">
+                    <div class="name">???</div>
+                    <div class="store">???</div>
+                </div>
+                <div class="contributor">
+                    <div class="name">???</div>
+                    <div class="store">???</div>
+                </div>
+            </div>
+            
+            <div class="sidebar-section">
+                <h3>История обновлений</h3>
+                <div class="update-log">
+                    <div class="update">
+                        <span class="version">v1.2</span>
+                        <span class="date">28.05.2025</span>
+                        <p>Обновлён внешний вид сайта <br> Добавлены 3 новые ткани: Модал, шерсть и люрекс <br>Добавлена форма обратной связи</p>
+                    </div>                	
+                    <div class="update">
+                        <span class="version">v1.0</span>
+                        <span class="date">27.05.2025</span>
+                        <p>Добро пожаловать!</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+    
+    <footer class="footer">
+        <img src="img/мааглого.png" alt="MAAG" class="footer-logo">
+        <p>BY. MAAG TEAM 3998</p>
+    </footer>
 
     <script>
         // Активация аккордеона
@@ -996,21 +1415,6 @@
                     item.style.display = 'none';
                 }
             });
-        });
-        
-        // Открытие/закрытие справочника символов
-        const careGuideBtn = document.getElementById('careGuideBtn');
-        const careGuide = document.getElementById('careGuide');
-        
-        careGuideBtn.addEventListener('click', () => {
-            if (careGuide.style.display === 'block') {
-                careGuide.style.display = 'none';
-                careGuideBtn.textContent = 'Справочник символов по уходу';
-            } else {
-                careGuide.style.display = 'block';
-                careGuideBtn.textContent = 'Скрыть справочник';
-                careGuide.scrollIntoView({ behavior: 'smooth' });
-            }
         });
     </script>
 </body>
